@@ -6,6 +6,11 @@ This script is for an Arduino MIDI controller.
  * LCD 16x2 I2C
  * 2 Adafruit Trellis 4x4 
 
+##Arduino Libraries
+ * Wire.h
+ * Adafruit Trellis
+ * LiquidCrystal I2C
+
 ![Prototype 1](https://raw.githubusercontent.com/arnipluseinn/illumidi-controller/master/illumidi_1.JPG)
 ![Prototype 2](https://raw.githubusercontent.com/arnipluseinn/illumidi-controller/master/illumidi_2.JPG)
 ![Prototype 3](https://raw.githubusercontent.com/arnipluseinn/illumidi-controller/master/illumidi_3.JPG)
