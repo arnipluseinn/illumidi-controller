@@ -38,24 +38,18 @@ void setup() {
 
   lcd.init();
   lcd.backlight();
-  //mySerial.begin(9600); // set up serial port for 9600 baud
   delay(500); // wait for display to boot up
   Serial.begin(31250);
-  //Serial.begin(38400);
+
 
   lcd.print("FM Belfast");
   lcd.setCursor(0, 1);
   lcd.print("illumidi v3");
 
-  // INT pin requires a pullup
   pinMode(INTPIN, INPUT);
   digitalWrite(INTPIN, HIGH);
 
-  // begin() with the addresses of each panel in order
-  // I find it easiest if the addresses are in order
-  //trellis.begin(0x70);  // only one
-  trellis.begin(0x71, 0x72);  // or four!
-
+  trellis.begin(0x71, 0x72); 
   // light up all the LEDs in order
   for (uint8_t i = 0; i < numKeys; i++) {
     trellis.setLED(i);
@@ -78,35 +72,30 @@ void loop() {
     // read the incoming byte:
     incomingByte = Serial.read();
 
-    // wait for as status-byte, channel 1, note on or off
-    if (incomingByte == 144) { // note on message starting starting
+    if (incomingByte == 144) { 
       action = 1;
-      //digitalWrite(statusLed,HIGH);
-      //     DmxSimple.write(1, 255);
-    } else if (incomingByte == 128) { // note off message starting
+
+    } else if (incomingByte == 128) { 
       action = 0;
-      //digitalWrite(statusLed,LOW);
-      //     DmxSimple.write(1, 0);
-    } else if (incomingByte == 208) { // aftertouch message starting
-      //not implemented yet
-    } else if (incomingByte == 160) { // polypressure message starting
-      //not implemented yet
-    } else if ( (action == 0) && (note == 0) ) { // if we received a "note off", we wait for which note (databyte)
+
+    } else if (incomingByte == 208) { 
+    } else if (incomingByte == 160) {
+    } else if ( (action == 0) && (note == 0) ) { 
       note = incomingByte;
       playNote(note, 0);
       note = 0;
       velocity = 0;
       action = 2;
-    } else if ( (action == 1) && (note == 0) ) { // if we received a "note on", we wait for the note (databyte)
+    } else if ( (action == 1) && (note == 0) ) { 
       note = incomingByte;
-    } else if ( (action == 1) && (note != 0) ) { // ...and then the velocity
+    } else if ( (action == 1) && (note != 0) ) {
       velocity = incomingByte;
       playNote(note, velocity);
       note = 0;
       velocity = 0;
       action = 0;
     } else {
-      //nada
+     
     }
   }
 
@@ -114,13 +103,13 @@ void loop() {
 
   unsigned long currentMillis = millis();
 
-  // delay(30); // 30ms delay is required, dont remove me!
+  
   if (currentMillis - previousMillis > interval) {
     previousMillis = currentMillis;
     if (MODE == MOMENTARY) {
-      // If a button was just pressed or released...
+      
       if (trellis.readSwitches()) {
-        // go through every button
+       
 
 
         if (trellis.justPressed(0)) {
@@ -514,9 +503,9 @@ void playNote(byte note, byte velocity) {
     value = LOW;
   }
 
-  //since we don't want to "play" all notes we wait for a note between 36 & 44
+ 
   if (note == 36) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+ 
     if (value == HIGH) {
       trellis.setLED(0);
       trellis.writeDisplay();
@@ -526,7 +515,7 @@ void playNote(byte note, byte velocity) {
     }
   }
   if (note == 37) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(1);
       trellis.writeDisplay();
@@ -536,7 +525,7 @@ void playNote(byte note, byte velocity) {
     }
   }
   if (note == 38) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(2);
       trellis.writeDisplay();
@@ -546,7 +535,7 @@ void playNote(byte note, byte velocity) {
     }
   }
   if (note == 39) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(3);
       trellis.writeDisplay();
@@ -556,7 +545,7 @@ void playNote(byte note, byte velocity) {
     }
   }
   if (note == 40) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(16);
       trellis.writeDisplay();
@@ -566,7 +555,7 @@ void playNote(byte note, byte velocity) {
     }
   }
   if (note == 41) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(17);
       trellis.writeDisplay();
@@ -577,7 +566,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 42) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(18);
       trellis.writeDisplay();
@@ -588,7 +577,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 43) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(19);
       trellis.writeDisplay();
@@ -599,7 +588,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 44) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(4);
       trellis.writeDisplay();
@@ -610,7 +599,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 45) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(5);
       trellis.writeDisplay();
@@ -621,7 +610,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 46) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(6);
       trellis.writeDisplay();
@@ -632,7 +621,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 47) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(7);
       trellis.writeDisplay();
@@ -643,7 +632,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 48) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(20);
       trellis.writeDisplay();
@@ -654,7 +643,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 49) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(21);
       trellis.writeDisplay();
@@ -665,7 +654,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 50) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(22);
       trellis.writeDisplay();
@@ -676,7 +665,7 @@ void playNote(byte note, byte velocity) {
 
   }
   if (note == 51) {
-    //byte myPin=note-34; // to get a pinnumber between 2 and 9
+   
     if (value == HIGH) {
       trellis.setLED(23);
       trellis.writeDisplay();
