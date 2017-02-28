@@ -1,5 +1,5 @@
 # illumidi-controller
-This script is for Arduino MIDI controller. 
+This script is for an Arduino MIDI controller. 
 
 ##Hardware
  * Arduino UNO with Atmega16U2 USB chip
